@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-st.set_page_config(page_title="DFR Cost-Benefit Dashboard V 1.5", layout="wide")
+st.set_page_config(page_title="DFR Cost-Benefit Dashboard V 2.0", layout="wide")
 st.title("Drone-as-First-Responder (DFR) — Cost / Benefit Dashboard V 2.0")
 
 st.markdown(
