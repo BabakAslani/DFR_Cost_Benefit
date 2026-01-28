@@ -3,8 +3,10 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-st.set_page_config(page_title="DFR Cost-Benefit Dashboard V 2.1", layout="wide")
-st.title("Drone-as-First-Responder (DFR) — Cost / Benefit Dashboard V 2.1")
+# ------------------------------------------------------------
+# PAGE CONFIG (title updated later after sidebar input)
+# ------------------------------------------------------------
+st.set_page_config(page_title="DFR Cost-Benefit Dashboard", layout="wide")
 
 st.markdown(
     """
@@ -45,22 +47,26 @@ st.markdown(
 # ------------------------------------------------------------
 st.sidebar.header("Capital Costs (One-Time)")
 
-# kept (as requested)
 equipment_cost = st.sidebar.number_input("Equipment (Radar) (one-time $)", value=15000.0, step=1000.0)
 infra_cost = st.sidebar.number_input("Infrastructure (one-time $)", value=20000.0, step=1000.0)
 
-# keep number of drones input (doesn't affect capital anymore)
-num_drones = st.sidebar.number_input("Number of drones", value=2, min_value=0, step=1)
+# (1) Additional drones input + title uses this value
+additional_drones = st.sidebar.number_input("Additional drones", value=0, min_value=0, step=1)
 
-# updated capital calculation (as requested)
-capital_costs = equipment_cost + infra_cost
+# Title reflects number of additional drones
+st.title(f"Drone-as-First-Responder (DFR) — Cost / Benefit Dashboard (Additional Drones: {additional_drones})")
+
+# Capital cost rule:
+# - If additional_drones = 0 -> treat as 1 package
+# - Each additional drone adds another fixed package cost
+package_cost = equipment_cost + infra_cost
+capital_costs = package_cost * (1 + int(additional_drones))
 
 # ------------------------------------------------------------
 # ANNUAL TRAINING
 # ------------------------------------------------------------
 st.sidebar.header("Annual Training")
 
-# toggle: either annual budget OR detailed breakdown (as requested)
 use_training_budget = st.sidebar.checkbox("Use Annual Training Budget (instead of breakdown)", value=True)
 
 if use_training_budget:
@@ -81,7 +87,17 @@ st.sidebar.header("Operating Costs (Annual)")
 st.sidebar.subheader("Contract / Subscriptions")
 
 contract_fee_annual = st.sidebar.number_input("Contract Fee ($/year)", value=60000.0, step=1000.0)
-software_subscriptions_annual = st.sidebar.number_input("Software Subscriptions ($/year)", value=8000.0, step=500.0)
+
+# (3) Software cost: dropdown for additional items + count box
+software_base_annual = st.sidebar.number_input("Software Subscriptions ($/year)", value=8000.0, step=500.0)
+software_add_mode = st.sidebar.selectbox("Software: additional items?", ["No", "Yes"])
+
+software_add_count = 0
+if software_add_mode == "Yes":
+    software_add_count = st.sidebar.number_input("Number of additional software items", value=0, min_value=0, step=1)
+
+# Treat base subscription as "1 item" and add count if selected
+software_subscriptions_annual = software_base_annual * (1 + int(software_add_count))
 
 # Labor per hour
 st.sidebar.subheader("Labor")
@@ -94,7 +110,6 @@ annual_labor = labor_rate * labor_hours_per_day * labor_people * num_shifts * la
 
 # Maintenance
 st.sidebar.subheader("Maintenance")
-# Removed Regular Maintenance ($/year) as requested
 irregular_cost = st.sidebar.number_input("Unexpected failure cost ($)", value=2000.0, step=200.0)
 irregular_events = st.sidebar.slider("Expected failures per year", 0, 10, 1)
 irregular_annual = irregular_cost * irregular_events
@@ -102,9 +117,15 @@ irregular_annual = irregular_cost * irregular_events
 # Communications & permits
 st.sidebar.subheader("Communications & Permits")
 
-# Communication ($/month) -> per year + dropdown (as requested)
-comm_type = st.sidebar.selectbox("Communication Type", ["Cellular", "Other (user input)"])
-annual_comm = st.sidebar.number_input("Communication cost ($/year)", value=2400.0, step=100.0)
+# (2) Communication type: Cellular OR Cellular + Others
+comm_type = st.sidebar.selectbox("Communication Type", ["Cellular", "Cellular + Others"])
+cellular_comm_annual = st.sidebar.number_input("Cellular communication cost ($/year)", value=2400.0, step=100.0)
+
+other_comm_annual = 0.0
+if comm_type == "Cellular + Others":
+    other_comm_annual = st.sidebar.number_input("Other communication cost ($/year)", value=0.0, step=100.0)
+
+annual_comm = cellular_comm_annual + other_comm_annual
 
 permits_cost_annual = st.sidebar.number_input("Waivers & Permits (annual $)", value=3000.0, step=200.0)
 
@@ -128,23 +149,19 @@ value_per_min = st.sidebar.number_input("Value of time ($/min)", value=20.0)
 calls_per_year = st.sidebar.number_input("Calls handled by drones per year", value=2000)
 avoided_cost_per_call = st.sidebar.number_input("Avoided officer response cost ($/call)", value=50.0)
 
-# kept
 ben_labor = st.sidebar.number_input("Labor Savings ($/yr)", value=0.0)
 
-# Safety Improvements: numbers only (no $/event)
 safety_events_per_year = st.sidebar.number_input("Safety Improvements (count/yr)", value=0, step=1, min_value=0)
 ben_safety = float(safety_events_per_year)  # numbers only
 
 ben_revenue = st.sidebar.number_input("Revenue Increases ($/yr)", value=0.0)
 
-# Reduced Dispatch Units: numbers only
 dispatch_units_reduced_per_year = st.sidebar.number_input("Reduced Dispatch Units (count/yr)", value=0, step=1, min_value=0)
 ben_dispatch = float(dispatch_units_reduced_per_year)  # numbers only
 
 response_time_savings = minutes_saved * value_per_min * calls_per_year
 cost_avoidance = avoided_cost_per_call * calls_per_year
 
-# updated annual benefits (includes numeric-only safety + dispatch as requested)
 annual_benefits = response_time_savings + cost_avoidance + ben_labor + ben_safety + ben_revenue + ben_dispatch
 
 # ------------------------------------------------------------
