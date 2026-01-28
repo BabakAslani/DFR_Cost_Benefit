@@ -270,14 +270,14 @@ PB_YMIN, PB_YMAX   = 0, 10         # Payback in years (fixed)
 
 # ROI bar
 axs[0].bar([0], [roi], width=bar_width, color="#1f77b4")
-axs[0].set_title("ROI (%)")
+axs[0].set_title("Return of Investment (%)")
 axs[0].set_xticks([])
 axs[0].set_ylim(ROI_YMIN, ROI_YMAX)
 axs[0].grid(True, axis="y")
 
 # BCR bar
 axs[1].bar([0], [bcr], width=bar_width, color="#2ca02c")
-axs[1].set_title("BCR")
+axs[1].set_title("Benefit Cost Ratio")
 axs[1].set_xticks([])
 axs[1].set_ylim(BCR_YMIN, BCR_YMAX)
 axs[1].grid(True, axis="y")
