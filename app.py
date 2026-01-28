@@ -51,7 +51,7 @@ equipment_cost = st.sidebar.number_input("Equipment (Radar) (one-time $)", value
 infra_cost = st.sidebar.number_input("Infrastructure (one-time $)", value=20000.0, step=1000.0)
 
 # (1) Additional drones input + title uses this value
-additional_drones = st.sidebar.number_input("Additional drones", value=0, min_value=0, step=1)
+additional_drones = st.sidebar.number_input("Number of additional drones", value=0, min_value=0, step=1)
 
 # Title reflects number of additional drones
 st.title(f"Drone-as-First-Responder (DFR) — Cost / Benefit Dashboard V2.1")
