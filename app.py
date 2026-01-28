@@ -101,7 +101,7 @@ software_subscriptions_annual = st.sidebar.number_input(
 software_other_annual = 0.0
 if software_type == "Software + Others":
     software_other_annual = st.sidebar.number_input(
-        "Other software items cost ($/year)", value=0.0, step=500.0
+        "Other software cost ($/year)", value=0.0, step=500.0
     )
 
 # Total software annual cost
@@ -129,11 +129,11 @@ st.sidebar.subheader("Communications & Permits")
 
 # (2) Communication type: Cellular OR Cellular + Others
 comm_type = st.sidebar.selectbox("Communication Type", ["Cellular", "Cellular + Others"])
-cellular_comm_annual = st.sidebar.number_input("Cellular communication cost ($/year)", value=2400.0, step=100.0)
+cellular_comm_annual = st.sidebar.number_input("Cost ($/year)", value=2400.0, step=100.0)
 
 other_comm_annual = 0.0
 if comm_type == "Cellular + Others":
-    other_comm_annual = st.sidebar.number_input("Other communication cost ($/year)", value=0.0, step=100.0)
+    other_comm_annual = st.sidebar.number_input("Other cost ($/year)", value=0.0, step=100.0)
 
 annual_comm = cellular_comm_annual + other_comm_annual
 
