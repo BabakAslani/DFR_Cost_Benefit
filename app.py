@@ -89,20 +89,24 @@ st.sidebar.subheader("Contract / Subscriptions")
 contract_fee_annual = st.sidebar.number_input("Contract Fee ($/year)", value=60000.0, step=1000.0)
 
 # (3) Software cost: dropdown for additional items + count box
+software_type = st.sidebar.selectbox(
+    "Software Type",
+    ["Software", "Software + Others"]
+)
+
 software_subscriptions_annual = st.sidebar.number_input(
     "Software Subscriptions ($/year)", value=8000.0, step=500.0
 )
 
-software_add_mode = st.sidebar.selectbox("Software: additional items?", ["No", "Yes"])
-
-software_additional_annual = 0.0
-if software_add_mode == "Yes":
-    software_additional_annual = st.sidebar.number_input(
-        "Additional software items cost ($/year)", value=0.0, step=500.0
+software_other_annual = 0.0
+if software_type == "Software + Others":
+    software_other_annual = st.sidebar.number_input(
+        "Other software items cost ($/year)", value=0.0, step=500.0
     )
 
-# Total software annual cost = base + additional annual cost
-software_subscriptions_annual = software_subscriptions_annual + software_additional_annual
+# Total software annual cost
+software_subscriptions_annual = software_subscriptions_annual + software_other_annual
+
 
 
 # Labor per hour
