@@ -233,26 +233,70 @@ col3.metric("Payback Period (years)", f"{payback_period:.2f}" if np.isfinite(pay
 # ------------------------------------------------------------
 # THIN BAR PLOTS FOR METRICS
 # ------------------------------------------------------------
+# st.subheader("Metrics Visualization")
+# fig, axs = plt.subplots(1, 3, figsize=(8, 2))
+#
+# bar_width = 0.2
+#
+# axs[0].bar([0], [roi], width=bar_width, color="#1f77b4")
+# axs[0].set_title("ROI (%)")
+# axs[0].set_xticks([])
+# axs[0].grid(True, axis="y")
+#
+# axs[1].bar([0], [bcr], width=bar_width, color="#2ca02c")
+# axs[1].set_title("BCR")
+# axs[1].set_xticks([])
+# axs[1].grid(True, axis="y")
+#
+# pb_val = payback_period if np.isfinite(payback_period) else 0
+# axs[2].bar([0], [pb_val], width=bar_width, color="#ff7f0e")
+# axs[2].set_title("Payback Period (yrs)")
+# axs[2].set_xticks([])
+# axs[2].grid(True, axis="y")
+#
+# plt.tight_layout()
+# st.pyplot(fig)
+# ------------------------------------------------------------
+# THIN BAR PLOTS FOR METRICS (FIXED AXES)
+# ------------------------------------------------------------
 st.subheader("Metrics Visualization")
 fig, axs = plt.subplots(1, 3, figsize=(8, 2))
-
 bar_width = 0.2
 
+# --- Fixed axis ranges (edit these constants if you want different fixed scales) ---
+ROI_YMIN, ROI_YMAX = -100, 300     # ROI in %
+BCR_YMIN, BCR_YMAX = 0, 5          # BCR ratio
+PB_YMIN, PB_YMAX   = 0, 10         # Payback in years (fixed)
+
+# ROI bar
 axs[0].bar([0], [roi], width=bar_width, color="#1f77b4")
 axs[0].set_title("ROI (%)")
 axs[0].set_xticks([])
+axs[0].set_ylim(ROI_YMIN, ROI_YMAX)
 axs[0].grid(True, axis="y")
 
+# BCR bar
 axs[1].bar([0], [bcr], width=bar_width, color="#2ca02c")
 axs[1].set_title("BCR")
 axs[1].set_xticks([])
+axs[1].set_ylim(BCR_YMIN, BCR_YMAX)
 axs[1].grid(True, axis="y")
 
-pb_val = payback_period if np.isfinite(payback_period) else 0
+# Payback bar (clip to axis max so bar always fits the fixed axis)
+if np.isfinite(payback_period) and payback_period > 0:
+    pb_val = min(payback_period, PB_YMAX)
+else:
+    pb_val = 0
+
 axs[2].bar([0], [pb_val], width=bar_width, color="#ff7f0e")
 axs[2].set_title("Payback Period (yrs)")
 axs[2].set_xticks([])
+axs[2].set_ylim(PB_YMIN, PB_YMAX)
 axs[2].grid(True, axis="y")
+
+# Optional: if payback exceeds fixed axis, show a clear cue
+if np.isfinite(payback_period) and payback_period > PB_YMAX:
+    axs[2].text(0, PB_YMAX * 0.95, f">{PB_YMAX}", ha="center", va="top")
 
 plt.tight_layout()
 st.pyplot(fig)
