@@ -264,9 +264,9 @@ fig, axs = plt.subplots(1, 3, figsize=(8, 2))
 bar_width = 0.2
 
 # --- Fixed axis ranges (edit these constants if you want different fixed scales) ---
-ROI_YMIN, ROI_YMAX = 0, 200     # ROI in %
+ROI_YMIN, ROI_YMAX = 0, 100     # ROI in %
 BCR_YMIN, BCR_YMAX = 0, 5          # BCR ratio
-PB_YMIN, PB_YMAX   = 0, 10         # Payback in years (fixed)
+PB_YMIN, PB_YMAX   = 0, 5         # Payback in years (fixed)
 
 # ROI bar
 axs[0].bar([0], [roi], width=bar_width, color="#1f77b4")
