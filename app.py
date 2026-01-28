@@ -226,7 +226,7 @@ col3.metric("Annual Benefits", f"${annual_benefits:,.0f}")
 # ------------------------------------------------------------
 st.header("Key Metrics")
 col1, col2, col3 = st.columns(3)
-col1.metric("ROI (annual)", f"{roi:.1f}%")
+col1.metric("Return of Investment (annual)", f"{roi:.1f}%")
 col2.metric("Benefit-Cost Ratio", f"{bcr:.2f}")
 col3.metric("Payback Period (years)", f"{payback_period:.2f}" if np.isfinite(payback_period) else "No payback")
 
@@ -277,7 +277,7 @@ axs[0].grid(True, axis="y")
 
 # BCR bar
 axs[1].bar([0], [bcr], width=bar_width, color="#2ca02c")
-axs[1].set_title("Benefit Cost Ratio")
+axs[1].set_title("Benefit-Cost Ratio")
 axs[1].set_xticks([])
 axs[1].set_ylim(BCR_YMIN, BCR_YMAX)
 axs[1].grid(True, axis="y")
