@@ -54,7 +54,7 @@ infra_cost = st.sidebar.number_input("Infrastructure (one-time $)", value=20000.
 additional_drones = st.sidebar.number_input("Additional drones", value=0, min_value=0, step=1)
 
 # Title reflects number of additional drones
-st.title(f"Drone-as-First-Responder (DFR) — Cost / Benefit Dashboard (Additional Drones: {additional_drones})")
+st.title(f"Drone-as-First-Responder (DFR) — Cost / Benefit Dashboard V2.1")
 
 # Capital cost rule:
 # - If additional_drones = 0 -> treat as 1 package
@@ -89,15 +89,21 @@ st.sidebar.subheader("Contract / Subscriptions")
 contract_fee_annual = st.sidebar.number_input("Contract Fee ($/year)", value=60000.0, step=1000.0)
 
 # (3) Software cost: dropdown for additional items + count box
-software_base_annual = st.sidebar.number_input("Software Subscriptions ($/year)", value=8000.0, step=500.0)
+software_subscriptions_annual = st.sidebar.number_input(
+    "Software Subscriptions ($/year)", value=8000.0, step=500.0
+)
+
 software_add_mode = st.sidebar.selectbox("Software: additional items?", ["No", "Yes"])
 
-software_add_count = 0
+software_additional_annual = 0.0
 if software_add_mode == "Yes":
-    software_add_count = st.sidebar.number_input("Number of additional software items", value=0, min_value=0, step=1)
+    software_additional_annual = st.sidebar.number_input(
+        "Additional software items cost ($/year)", value=0.0, step=500.0
+    )
 
-# Treat base subscription as "1 item" and add count if selected
-software_subscriptions_annual = software_base_annual * (1 + int(software_add_count))
+# Total software annual cost = base + additional annual cost
+software_subscriptions_annual = software_subscriptions_annual + software_additional_annual
+
 
 # Labor per hour
 st.sidebar.subheader("Labor")
