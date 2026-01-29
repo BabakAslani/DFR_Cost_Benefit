@@ -164,15 +164,13 @@ ben_labor = st.sidebar.number_input("Labor Savings ($/yr)", value=0.0)
 safety_events_per_year = st.sidebar.number_input("Safety Improvements (count/yr)", value=0, step=1, min_value=0)
 ben_safety = float(safety_events_per_year)  # numbers only
 
-ben_revenue = st.sidebar.number_input("Revenue Increases ($/yr)", value=0.0)
-
 dispatch_units_reduced_per_year = st.sidebar.number_input("Reduced Dispatch Units (count/yr)", value=0, step=1, min_value=0)
 ben_dispatch = float(dispatch_units_reduced_per_year)  # numbers only
 
 response_time_savings = minutes_saved * value_per_min * calls_per_year
 cost_avoidance = avoided_cost_per_call * calls_per_year
 
-annual_benefits = response_time_savings + cost_avoidance + ben_labor + ben_safety + ben_revenue + ben_dispatch
+annual_benefits = response_time_savings + cost_avoidance + ben_labor + ben_safety + ben_dispatch
 
 # ------------------------------------------------------------
 # ANALYSIS SETTINGS
