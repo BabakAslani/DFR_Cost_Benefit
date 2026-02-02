@@ -155,14 +155,18 @@ annual_op_cost = (
 st.sidebar.header("Benefits (Annual)")
 
 minutes_saved = st.sidebar.number_input("Response time improvement ", value=3.0, step=0.5)
-value_per_min = st.sidebar.number_input("Value of time ($/min)", value=20.0)
-calls_per_year = st.sidebar.number_input("Calls handled by drones per year", value=2000)
-avoided_cost_per_call = st.sidebar.number_input("Avoided officer response cost ($/call)", value=50.0)
+# value_per_min = st.sidebar.number_input("Value of time ($/min)", value=20.0)
+value_per_min = 20.0
+# calls_per_year = st.sidebar.number_input("Calls handled by drones per year", value=2000)
+calls_per_year = 2000
+
+# avoided_cost_per_call = st.sidebar.number_input("Avoided officer response cost ($/call)", value=50.0)
+avoided_cost_per_call = 50.0
 
 ben_labor = st.sidebar.number_input("Labor Savings ($/yr)", value=0.0)
 
-safety_events_per_year = st.sidebar.number_input("Safety Improvements (count/yr)", value=0, step=1, min_value=0)
-ben_safety = float(safety_events_per_year)  # numbers only
+# safety_events_per_year = st.sidebar.number_input("Safety Improvements (count/yr)", value=0, step=1, min_value=0)
+# ben_safety = float(safety_events_per_year)  # numbers only
 
 dispatch_units_reduced_per_year = st.sidebar.number_input("Reduced Dispatch Units (count/yr)", value=0, step=1, min_value=0)
 ben_dispatch = float(dispatch_units_reduced_per_year)  # numbers only
@@ -170,7 +174,7 @@ ben_dispatch = float(dispatch_units_reduced_per_year)  # numbers only
 response_time_savings = minutes_saved * value_per_min * calls_per_year
 cost_avoidance = avoided_cost_per_call * calls_per_year
 
-annual_benefits = response_time_savings + cost_avoidance + ben_labor + ben_safety + ben_dispatch
+annual_benefits = response_time_savings + cost_avoidance + ben_labor +  ben_dispatch
 
 # ------------------------------------------------------------
 # ANALYSIS SETTINGS
