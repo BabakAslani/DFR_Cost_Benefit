@@ -159,7 +159,7 @@ minutes_saved = st.sidebar.number_input("Response time improvement ", value=3.0,
 # value_per_min = st.sidebar.number_input("Value of time ($/min)", value=20.0)
 value_per_min = 50.0
 # calls_per_year = st.sidebar.number_input("Calls handled by drones per year", value=2000)
-calls_per_year = 2000
+calls_per_year = 1200
 
 # avoided_cost_per_call = st.sidebar.number_input("Avoided officer response cost ($/call)", value=50.0)
 avoided_cost_per_call = 50.0
