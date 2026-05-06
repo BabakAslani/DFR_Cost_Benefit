@@ -157,7 +157,7 @@ st.sidebar.header("Benefits (Annual)")
 
 minutes_saved = st.sidebar.number_input("Response time improvement ", value=3.0, step=0.5)
 # value_per_min = st.sidebar.number_input("Value of time ($/min)", value=20.0)
-value_per_min = 260.0
+value_per_min = 50.0
 # calls_per_year = st.sidebar.number_input("Calls handled by drones per year", value=2000)
 calls_per_year = 2000
 
