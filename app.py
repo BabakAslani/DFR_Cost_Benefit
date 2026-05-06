@@ -162,7 +162,7 @@ value_per_min = 50.0
 calls_per_year = 1200
 
 # avoided_cost_per_call = st.sidebar.number_input("Avoided officer response cost ($/call)", value=50.0)
-avoided_cost_per_call = 50.0
+# avoided_cost_per_call = 50.0
 
 # ben_labor = st.sidebar.number_input("Labor Savings (count/yr)", value=0, step=1, min_value=0)
 # avoided_labor = 50.0
@@ -175,10 +175,10 @@ avoided_cost_per_call = 50.0
 # ben_dispatch = float(dispatch_units_reduced_per_year)  # numbers only
 
 response_time_savings = minutes_saved * value_per_min * calls_per_year
-cost_avoidance = avoided_cost_per_call * calls_per_year
+#cost_avoidance = avoided_cost_per_call * calls_per_year
 
 # annual_benefits = response_time_savings + cost_avoidance + ben_labor_val +  ben_dispatch
-annual_benefits = response_time_savings + cost_avoidance
+annual_benefits = response_time_savings 
 # ------------------------------------------------------------
 # ANALYSIS SETTINGS
 # ------------------------------------------------------------
